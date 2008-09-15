@@ -26,9 +26,9 @@ class InputManager:
                 if eventType == KEYDOWN or eventType == KEYUP:
                     self.myActiveGameScene.handleKeyInput( eachEvent.key, eachEvent.mod, self.eventTypeToString(eventType) )
                 elif eventType == MOUSEMOTION:
-                    pass
+                    self.myActiveGameScene.handleMouseMovment( eachEvent.pos )
                 elif eventType == MOUSEBUTTONDOWN or eventType == MOUSEBUTTONUP:
-                    self.myActiveGameScene.handleMouseInput( eachEvent.button, self.eventTypeToString(eventType) )
+                    self.myActiveGameScene.handleMouseInput( eachEvent.button, eachEvent.pos, self.eventTypeToString(eventType) )
         
     def setActiveGameScene(self, gameScene):
         self.myActiveGameScene = gameScene
