@@ -16,6 +16,7 @@ class GameEntity(Sprite):
     activeDirectionIndex = 0
     name            = ""
     wayPoints       = None
+    checkVisibility = True
     
     
     def __init__(self, position = Vector2D(0.0, 0.0), direction = Vector2D(0.0, 0.0), unitSpeed = 0.0, name = ""):
@@ -28,6 +29,8 @@ class GameEntity(Sprite):
         self.name       = name 
         self.image      = None
         self.rect       = Rect(0,0,0,0)
+        
+        self.infoSurface = pygame.font.SysFont("arial",16)
         
     # Set image 
     def setImage(self, img):
@@ -73,14 +76,18 @@ class GameEntity(Sprite):
                 self.activeWaypointIndex = (self.activeWaypointIndex + 1) % len( self.wayPoints )
                 # Change to new direction
                 targetVector             = self.wayPoints[ self.activeWaypointIndex ]
-                print "moving to next Waypoint " + str( targetVector )
+                # print "moving to next Waypoint " + str( targetVector )
                 self.direction           = Vector2D.fromPoints( self.position, targetVector )
                 self.direction.normalizeVector() 
         
        
     # Render Gameentitiy 
     def render(self, surface, renderRect ): 
+        
         if self.image is not None:
             surface.blit( self.image, renderRect ) 
+            
+        #txtSurface = self.infoSurface.render( "%s,%s"%renderRect.topleft, True, (255,255,255)) 
+        #surface.blit( txtSurface, renderRect.topleft )
     
     

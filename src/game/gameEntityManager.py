@@ -64,5 +64,11 @@ class GameEntityManager:
                     eachEntity.setImage( activeImage )  
                 
             renderRect = Utils.transformRectPosition( eachEntity.rect, viewPortRect )
-            # TODO :: Visibility test to avoid unnescary rendering
-            eachEntity.render( surface, renderRect )
+            
+            # Visibility test to avoid unnescary rendering
+            if eachEntity.checkVisibility is True:
+                entityRect = eachEntity.rect
+                if viewPortRect.collidepoint( entityRect.topleft ) or viewPortRect.collidepoint( entityRect.bottomright ):
+                   eachEntity.render( surface, renderRect )                 
+            else:
+                eachEntity.render( surface, renderRect )

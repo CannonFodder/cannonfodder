@@ -66,7 +66,6 @@ class MainGame:
     
     # Refresh graphics
     def refreshGraphics(self):
-       # self.myScreen.blit( self.myBackground, (0,0,1024,768) )
         self.myGameWorld.renderWorld( self.myScreen )
         self.myGameEntityMngr.render( self.myScreen, self.myGameWorld.getViewPortRect() )
         

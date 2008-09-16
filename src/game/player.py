@@ -14,6 +14,7 @@ class Player(GameEntity):
         self.playerId   = playerId 
         self.isAiPlayer = isAiPlayer
         self.position   = Vector2D(10.0,10.0)
+        self.checkVisibility = False
         
     # Set crosshair position
     def setCrosshairPos(self, pos):
@@ -35,7 +36,7 @@ class Player(GameEntity):
         ## Draw crosshair ##
         
         # circle 
-        pygame.draw.circle( surface, (255,0,0), self.crosshairPos, 8, 2 )
+        pygame.draw.circle( surface, (255,0,0), self.crosshairPos, 8, 1 )
 
         # top - > down 
         startpos = ( self.crosshairPos[0], self.crosshairPos[1] - 5 )
