@@ -10,16 +10,6 @@ class ImageManager:
     lastImgId   = 0
     GFX_DIRECTORY = "../data/gfx/"
     
-    def __init__(self):
-        # os.path.join("../data/gfx")
-        pass
-    
-    # Load heightmap 
-    def loadHeightmap(self, name):
-        absPath = os.path.abspath( self.GFX_DIRECTORY + "/level")
-        return pygame.image.load( absPath + "/" + name + ".jpg" ).convert() 
-        
-    
     # Load terrain textures
     def loadTerrainTextures(self):
         absPath = os.path.abspath( self.GFX_DIRECTORY + "/terrain" )
@@ -69,11 +59,12 @@ class ImageManager:
                     # Specify mode and modenumber
                     mode = eachFile[0:1]
                     modeNumber = eachFile[1:5]
+                    animationMode = eachFile[6:10]
                     
-                    print "loaded file " + eachFile
+                    print "loaded file " + eachFile + " with animode " + animationMode
                     
                     # Add to image list
-                    self.imgList[ self.lastImgId ] = { 'id':self.lastImgId, 'name':name, 'img':img, "mode":mode, "modeNumber":modeNumber }
+                    self.imgList[ self.lastImgId ] = { 'id':self.lastImgId, 'name':name, 'img':img, "mode":mode, "modeNumber":modeNumber, "animationMode":animationMode }
                     self.lastImgId += 1
                     
                     # Store max animation phases
@@ -102,7 +93,8 @@ class ImageManager:
     # Retrieve Image
     def getImage(self, name, mode = "r", modeNumber = "0001", animationMode = "0000"):
         for eachImage in self.imgList.values():
-            if eachImage['name'] == name and eachImage['mode'] == mode and eachImage['modeNumber'] == modeNumber:
+            if eachImage['name'] == name and eachImage['mode'] == mode and eachImage['modeNumber'] == modeNumber \
+                and eachImage['animationMode'] == animationMode:
                 return eachImage['img'] 
             
         return None

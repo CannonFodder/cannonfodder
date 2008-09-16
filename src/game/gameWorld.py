@@ -4,7 +4,7 @@ import random
 
 class GameWorld:
     
-    showGrid  = False 
+    showGrid  = True 
     GRID_SIZE = (25,20)
     myTiles   = []
     gameWorldDimension = (0,0)
@@ -34,6 +34,11 @@ class GameWorld:
         
     # Render gameworld 
     def renderWorld(self, surface):
+        # Draw tiles 
+        for x in xrange(0, surface.get_width(), self.myLandscapeSurface.get_width()):
+            for y in xrange(0, surface.get_height(), self.myLandscapeSurface.get_height()):
+                surface.blit( self.myLandscapeSurface, (x,y) )
+        
         if self.showGrid is True:
             for x in xrange( 0, self.gameWorldDimension[0], self.GRID_SIZE[0] ):
                startpos = (x, 0)
@@ -44,13 +49,3 @@ class GameWorld:
                startpos = (0, y)
                endpos   = (self.gameWorldDimension[0], y)
                pygame.draw.line( surface, (0,0,0), startpos, endpos, 1)
-            
-        # Draw tiles 
-        for x in xrange(0, surface.get_width(), self.myLandscapeSurface.get_width()):
-            for y in xrange(0, surface.get_height(), self.myLandscapeSurface.get_height()):
-                surface.blit( self.myLandscapeSurface, (x,y) )
-        
-        # Draw information
-        font = pygame.font.SysFont( "arial", 16 )
-        fontSurface = font.render( "Viewport rect @%s"%self.viewPortRect, True, (255,255,255))
-        surface.blit( fontSurface, (300,10) )

@@ -17,6 +17,10 @@ class GameEntity(Sprite):
     name            = ""
     wayPoints       = None
     checkVisibility = True
+    isAlive         = True
+    currentMode     = 'r'
+    maxAnimationScenes = 0
+    animationMode = 0
     
     
     def __init__(self, position = Vector2D(0.0, 0.0), direction = Vector2D(0.0, 0.0), unitSpeed = 0.0, name = ""):
@@ -66,6 +70,7 @@ class GameEntity(Sprite):
         self.activeDirectionIndex = int( rad * 16 )
         self.checkWaypoints() 
         
+    # Check if new waypoint is reached
     def checkWaypoints(self):
         if self.wayPoints is not None:  
             # Compare distance between targetVector and currentPosition
@@ -79,7 +84,14 @@ class GameEntity(Sprite):
                 # print "moving to next Waypoint " + str( targetVector )
                 self.direction           = Vector2D.fromPoints( self.position, targetVector )
                 self.direction.normalizeVector() 
-        
+      
+    # Returns the current animationMode As String
+    def getAnimationModeAsString(self):
+        strRes = str( self.animationMode )
+        if len( strRes ) == 1:
+            return "000" + strRes 
+        else:
+            return "00" + strRes 
        
     # Render Gameentitiy 
     def render(self, surface, renderRect ): 

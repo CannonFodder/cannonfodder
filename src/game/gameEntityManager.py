@@ -1,4 +1,5 @@
 from game.gameEntity import GameEntity
+from game.explosion import Explosion
 from utils.utils import Utils 
 
 class GameEntityManager:
@@ -6,16 +7,18 @@ class GameEntityManager:
     gameEntities = None
     lastEntityId = 0 
     myImgMngr    = None
+    deathList    = None
     
     # Initialize 
     def __init__(self):
         self.gameEntities = {}
+        self.deathList    = []
         
     # Add Entitiy 
     def addEntity(self, gameEntity):
         self.gameEntities[self.lastEntityId] = gameEntity
+        gameEntity.id = self.lastEntityId
         self.lastEntityId += 1
-        return self.lastEntityId - 1
     
     # Remove Entity 
     def removeEntity(self, entityId):
@@ -37,19 +40,44 @@ class GameEntityManager:
         self.addEntity( newGameEntity )
         return newGameEntity
     
+    # Create new explosion
+    def createExplosion( self, name, pos, animationSpeed ):
+        self.loadUnit( name )
+        someExplosion = Explosion( name, pos, animationSpeed )
+        someExplosion.maxAnimationScenes = self.myImgMngr.getMaxAnimationScenes( name, 'a' )
+        self.addEntity( someExplosion )
+        return someExplosion
+    
     # Update Entities 
     def update(self, timePassed):
+        # Loop through deathlist
+        for eachDeathId in self.deathList:
+            self.removeEntity( eachDeathId )
+        
+        # Check every entity on list 
         for eachEntity in self.gameEntities.itervalues():
-            eachEntity.update(timePassed)
+            if eachEntity.isAlive is True:
+                eachEntity.update(timePassed)
+            else:
+                # if not alive put to deathlist 
+                self.deathList.append( eachEntity.id )
             
+    # Render every entities 
     def render(self, surface, viewPortRect ):
         for eachEntity in self.gameEntities.values():
             if eachEntity.activeDirectionIndex != -1:
                 
-                max = self.myImgMngr.getMaxAnimationScenes( eachEntity.name, 'r' )
-                rotationMode = int( eachEntity.activeDirectionIndex ) % int( max )
+                currentMode = eachEntity.currentMode 
+                max = self.myImgMngr.getMaxAnimationScenes( eachEntity.name, currentMode )
+                
+                if int(max) > 0:
+                    rotationMode = int( eachEntity.activeDirectionIndex ) % int( max )
+                else:
+                    rotationMode = int( eachEntity.activeDirectionIndex )
+                    
                 someStr = str( rotationMode )
-                animationMode = "0000"
+                #rotationMode   = eachEntity.getRotationModeAsString()
+                strAnimationMode = eachEntity.getAnimationModeAsString()
                 
                 # Which mode?
                 if len( someStr ) == 1:
@@ -57,7 +85,7 @@ class GameEntityManager:
                 else:
                     someStr = "00"  + someStr 
 
-                activeImage = self.myImgMngr.getImage( eachEntity.name, 'r',  someStr, animationMode )
+                activeImage = self.myImgMngr.getImage( eachEntity.name, currentMode,  someStr, strAnimationMode )
                 
                 if activeImage is not None:
                     # Set activeImage to entity 

@@ -22,7 +22,8 @@ class MainGameScene( GameScene ):
     def handleMouseInput(self, mousebutton, mousePos, state = 'PRESSED'):
         if state == 'PRESSED':
             if mousebutton == 1:
-                self.refToGameEntiyMngr.loadAndCreateUnit('objects/tree1', Vector2D(mousePos[0],mousePos[1]), Vector2D(0,0), 0)
+                #self.refToGameEntiyMngr.loadAndCreateUnit('objects/tree1', Vector2D(mousePos[0],mousePos[1]), Vector2D(0,0), 0)
+                self.refToGameEntiyMngr.createExplosion('explosions/bigDirty', Vector2D(mousePos[0],mousePos[1]), 0.2 )
             elif mousebutton == 3:  
                 self.mouseButtonPressed = True
         else:
