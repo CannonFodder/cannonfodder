@@ -10,7 +10,7 @@ from game.mainGameScene import MainGameScene
 from game.gameEntityManager import GameEntityManager
 from game.imageManager import ImageManager
 from game.gameEntity import GameEntity
-from utils.vector2D import Vector2D
+from utils.vector import Vector2D
 from game.gameWorld import GameWorld
 
 class MainGame(network.Client):
