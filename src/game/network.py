@@ -9,7 +9,7 @@ from twisted.cred import checkers, portal
 from twisted.internet import reactor
 from twisted.cred import credentials
 
-from utils.vector2D import Vector2D
+from utils.vector import Vector2D
 
 import time
 
