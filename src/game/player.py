@@ -1,6 +1,6 @@
 import pygame 
 from game.gameEntity import GameEntity
-from utils.vector2D import Vector2D
+from utils.vector import Vector2D
 
 class Player(GameEntity):
     

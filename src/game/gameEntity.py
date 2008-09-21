@@ -1,7 +1,7 @@
 import math 
 import pygame
 
-from utils.vector2D import Vector2D
+from utils.vector import Vector2D
 from pygame.sprite import Sprite
 from pygame.locals import *
 

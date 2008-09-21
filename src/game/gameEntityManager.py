@@ -19,6 +19,7 @@ class GameEntityManager:
         self.gameEntities[self.lastEntityId] = gameEntity
         gameEntity.id = self.lastEntityId
         self.lastEntityId += 1
+        return gameEntity.id
     
     # Remove Entity 
     def removeEntity(self, entityId):
@@ -28,7 +29,7 @@ class GameEntityManager:
     def getEntity(self, entityId):
         return self.gameEntities[entityId]
     
-    # Load unit (donnot create unit) 
+    # Load unit (don not create unit) 
     def loadUnit(self, name):
         print "Adding unit-directory " + name 
         self.myImgMngr.addUnitDirectory( name )
